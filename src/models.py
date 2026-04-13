@@ -99,20 +99,20 @@ class UNetStudent(nn.Module):
 # ─────────────────────────────────────────────
 #  Couches d'adaptation (1×1 conv)
 # ─────────────────────────────────────────────
-
 class FeatureAdapters(nn.Module):
     """
     Projette les feature maps du Student vers les dimensions du Teacher
     via des convolutions 1×1.
 
-    Teacher (ResNet34)    : [64, 128, 256, 512]
-    Student (MobileNetV2) : [24,  32,  96, 320]
+    Teacher (UNet++)      : [64, 128, 256, 512]
+    Student (UNetStudent) : [128, 256, 512, 1280]  # Updated based on actual output
     """
 
     def __init__(self):
         super().__init__()
 
-        student_channels = [24,  32,  96, 320]
+        # Updated to match your actual UNetStudent output channels
+        student_channels = [128, 256, 512, 1280]  # Changed from [24, 32, 96, 320]
         teacher_channels = [64, 128, 256, 512]
 
         self.adapters = nn.ModuleList([
@@ -125,8 +125,6 @@ class FeatureAdapters(nn.Module):
             adapter(feat)
             for adapter, feat in zip(self.adapters, student_features)
         ]
-
-
 # ─────────────────────────────────────────────
 #  Test rapide
 # ─────────────────────────────────────────────

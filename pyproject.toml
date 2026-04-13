@@ -1,0 +1,13 @@
+[project]
+name = "distill-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "albumentations>=2.0.8",
+    "numpy>=2.4.4",
+    "segmentation-models-pytorch>=0.5.0",
+    "tabulate>=0.10.0",
+    "torch>=2.11.0",
+]
