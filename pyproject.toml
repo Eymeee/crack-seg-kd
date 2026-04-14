@@ -7,6 +7,7 @@ requires-python = ">=3.14"
 dependencies = [
     "albumentations>=2.0.8",
     "kagglehub>=1.0.0",
+    "matplotlib>=3.10.8",
     "numpy>=2.4.4",
     "segmentation-models-pytorch>=0.5.0",
     "tabulate>=0.10.0",

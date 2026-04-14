@@ -112,41 +112,4 @@ class FeatureAdapters(nn.Module):
         return [
             adapter(feat)
             for adapter, feat in zip(self.adapters, student_features)
-        ]# ─────────────────────────────────────────────
-
-if __name__ == "__main__":
-    import torch
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    x = torch.randn(2, 3, 256, 256).to(device)
-
-    teacher  = UNetPlusPlus().to(device)
-    student  = UNetStudent().to(device)
-    adapters = FeatureAdapters().to(device)
-
-    with torch.no_grad():
-        t_logits, t_feats = teacher(x)
-        s_logits, s_feats = student(x)
-        adapted           = adapters(s_feats)
-
-    print("=== Teacher (U-Net++ / ResNet34) ===")
-    print(f"  Logits : {t_logits.shape}")
-    for i, f in enumerate(t_feats):
-        print(f"  Feature {i} : {f.shape}")
-
-    print("\n=== Student (U-Net / MobileNetV2) ===")
-    print(f"  Logits : {s_logits.shape}")
-    for i, f in enumerate(s_feats):
-        print(f"  Feature {i} : {f.shape}")
-
-    print("\n=== Adaptation Student → Teacher ===")
-    for i, (a, t) in enumerate(zip(adapted, t_feats)):
-        ch_match = "✓" if a.shape[1] == t.shape[1] else "✗"
-        print(f"  Niveau {i} : {tuple(a.shape)} → {tuple(t.shape)}  {ch_match}")
-
-    def count_params(m):
-        return sum(p.numel() for p in m.parameters()) / 1e6
-
-    print(f"\nTeacher  : {count_params(teacher):.1f} M paramètres")
-    print(f"Student  : {count_params(student):.1f} M paramètres")
-    print(f"Adapters : {count_params(adapters):.3f} M paramètres")
+        ]

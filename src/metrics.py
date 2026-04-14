@@ -170,26 +170,3 @@ def print_comparison_table(results: dict):
     headers = ["Modèle", "IoU ↑", "F1 ↑", "Paramètres ↓", "Latence ↓"]
     print("\n" + tabulate(rows, headers=headers, tablefmt="rounded_outline"))
 
-
-# ─────────────────────────────────────────────
-#  Test rapide
-# ─────────────────────────────────────────────
-
-if __name__ == "__main__":
-    B, H, W = 4, 512, 512
-
-    logits  = torch.randn(B, 1, H, W)
-    targets = torch.randint(0, 2, (B, 1, H, W)).float()
-
-    iou = iou_score(logits, targets)
-    f1  = f1_score(logits, targets)
-    print(f"IoU : {iou:.4f}")
-    print(f"F1  : {f1:.4f}")
-
-    # Simuler un tableau comparatif final
-    fake_results = {
-        "Teacher (U-Net++)"  : {"iou": 0.820, "f1": 0.860, "params": 31.2, "latency_ms": 45.1},
-        "Student seul"       : {"iou": 0.740, "f1": 0.790, "params":  3.1, "latency_ms": 12.3},
-        "Student distillé"   : {"iou": 0.800, "f1": 0.840, "params":  3.1, "latency_ms": 12.3},
-    }
-    print_comparison_table(fake_results)

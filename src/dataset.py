@@ -135,14 +135,3 @@ def get_dataloaders(data_dir: str,
 
     return loaders
 
-
-# ─────────────────────────────────────────────
-#  Test rapide
-# ─────────────────────────────────────────────
-
-if __name__ == "__main__":
-    loaders = get_dataloaders(data_dir="data", img_size=512, batch_size=4)
-    images, masks = next(iter(loaders["train"]))
-    print(f"Batch images : {images.shape}")   # [4, 3, 512, 512]
-    print(f"Batch masques : {masks.shape}")   # [4, 1, 512, 512]
-    print(f"Valeurs masque : {masks.unique()}")  # tensor([0., 1.])
